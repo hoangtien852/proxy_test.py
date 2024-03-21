@@ -326,7 +326,7 @@ class Proxy:
                 and os.path.exists(self.flags.port_file):
             os.remove(self.flags.port_file)
 
-    def _register_signals(self) -> None:\
+    def _register_signals(self) -> None:
         print("day la code cua tao 11")
         # TODO: Define SIGUSR1, SIGUSR2
         signal.signal(signal.SIGINT, self._handle_exit_signal)
