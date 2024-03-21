@@ -36,9 +36,9 @@ from .common.constants import (
 if TYPE_CHECKING:   # pragma: no cover
     from .core.listener import TcpSocketListener
 
-print("day la code cua tao")
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
+print("day la code cua tao")
 
 flags.add_argument(
     '--version',
