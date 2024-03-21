@@ -168,6 +168,7 @@ class Proxy:
     """
 
     def __init__(self, input_args: Optional[List[str]] = None, **opts: Any) -> None:
+        print("day la code cua tao 1")
         self.flags = FlagParser.initialize(input_args, **opts)
         self.listeners: Optional[ListenerPool] = None
         self.executors: Optional[ThreadlessPool] = None
@@ -177,13 +178,16 @@ class Proxy:
         self.ssh_tunnel_listener: Optional[SshTunnelListener] = None
 
     def __enter__(self) -> 'Proxy':
+        print("day la code cua tao 2")
         self.setup()
         return self
 
     def __exit__(self, *args: Any) -> None:
+        print("day la code cua tao 3")
         self.shutdown()
 
     def setup(self) -> None:
+        print("day la code cua tao 4")
         # TODO: Introduce cron feature
         # https://github.com/abhinavsingh/proxy.py/discussions/808
         #
@@ -270,6 +274,7 @@ class Proxy:
             self._register_signals()
 
     def shutdown(self) -> None:
+        print("day la code cua tao 5")
         if self.flags.enable_ssh_tunnel:
             assert self.ssh_tunnel_listener is not None
             self.ssh_tunnel_listener.shutdown()
@@ -288,20 +293,24 @@ class Proxy:
 
     @property
     def remote_executors_enabled(self) -> bool:
+        print("day la code cua tao 6")
         return self.flags.threadless and \
             not self.flags.local_executor
 
     def _write_pid_file(self) -> None:
+        print("day la code cua tao 7")
         if self.flags.pid_file:
             with open(self.flags.pid_file, 'wb') as pid_file:
                 pid_file.write(bytes_(os.getpid()))
 
     def _delete_pid_file(self) -> None:
+        print("day la code cua tao 8")
         if self.flags.pid_file \
                 and os.path.exists(self.flags.pid_file):
             os.remove(self.flags.pid_file)
 
     def _write_port_file(self) -> None:
+        print("day la code cua tao 9")
         if self.flags.port_file:
             with open(self.flags.port_file, 'wb') as port_file:
                 if not self.flags.unix_socket_path:
@@ -312,11 +321,13 @@ class Proxy:
                     port_file.write(b'\n')
 
     def _delete_port_file(self) -> None:
+        print("day la code cua tao 10")
         if self.flags.port_file \
                 and os.path.exists(self.flags.port_file):
             os.remove(self.flags.port_file)
 
-    def _register_signals(self) -> None:
+    def _register_signals(self) -> None:\
+        print("day la code cua tao 11")
         # TODO: Define SIGUSR1, SIGUSR2
         signal.signal(signal.SIGINT, self._handle_exit_signal)
         signal.signal(signal.SIGTERM, self._handle_exit_signal)
@@ -332,14 +343,17 @@ class Proxy:
 
     @staticmethod
     def _handle_exit_signal(signum: int, _frame: Any) -> None:
+        print("day la code cua tao 2")
         logger.info('Received signal %d' % signum)
         sys.exit(0)
 
     def _handle_siginfo(self, _signum: int, _frame: Any) -> None:
+        print("day la code cua tao 3")
         pprint.pprint(self.flags.__dict__)  # pragma: no cover
 
 
 def sleep_loop() -> None:
+    print("day la code cua tao 14")
     while True:
         try:
             time.sleep(1)
@@ -348,9 +362,11 @@ def sleep_loop() -> None:
 
 
 def main(**opts: Any) -> None:
+    print("day la code cua tao 15")
     with Proxy(sys.argv[1:], **opts):
         sleep_loop()
 
 
 def entry_point() -> None:
+    print("day la code cua tao 16")
     main()
